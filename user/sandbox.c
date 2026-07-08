@@ -30,7 +30,7 @@ main(int argc, char *argv[])
   n += 1; // skip path
     
   // strip off the first n arguments to sandbox
-  for(i = n; i < argc && i < MAXARG; i++){
+  for(i = n; i < argc && i < MAXARG; i++){ // cat README
     nargv[i-n] = argv[i];
   }
   nargv[argc-n] = 0;
@@ -41,11 +41,11 @@ main(int argc, char *argv[])
     exit(1);
   }
   if(pid == 0) {
-    if (interpose(atoi(argv[mask]), argv[mask+1]) < 0) {
+    if (interpose(atoi(argv[mask]), argv[2]) < 0) {
       printf("%s: interpose failed", argv[0]);
       exit(1);
     }
-    exec(nargv[0], nargv);
+    exec(nargv[0], nargv); // "cat", 2
     printf("%s: exec %s failed\n", argv[0], nargv[0]);
     exit(1);
   } else {

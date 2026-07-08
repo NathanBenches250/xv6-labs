@@ -19,6 +19,8 @@ main(int argc, char *argv[])
 
   strcpy(data + 16, argv[1]);
 
+ // printf("%p", &data);
+
   exit(0);
 }
 

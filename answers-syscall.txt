@@ -1,0 +1,6 @@
+1. usertrap() in trap.c called syscall()
+2. syscall open 
+3. was in user mode
+4. a3 and instruction is lw	a3,0(zero)
+5. the scause is 0xd, and this means we have a page fault. 0 is not used (guard space).
+5. pid=1 and name=proc.

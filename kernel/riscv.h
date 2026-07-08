@@ -12,22 +12,23 @@ r_mhartid()
 // Machine Status Register, mstatus
 
 #define MSTATUS_MPP_MASK (3L << 11) // previous mode.
-#define MSTATUS_MPP_M (3L << 11)
+#define MSTATUS_MPP_M (3L << 11) // mask out the garbage at bits 11 and 12 and then add the privilege.
 #define MSTATUS_MPP_S (1L << 11)
 #define MSTATUS_MPP_U (0L << 11)
-
+// 3L means take 32-bit int 3 and make it 64bit, and then shift left by 11 because MSTATUS is 64bit wide.
 static inline uint64
 r_mstatus()
 {
   uint64 x;
-  asm volatile("csrr %0, mstatus" : "=r" (x) );
+  asm volatile("csrr %0, mstatus" : "=r" (x) ); // control-status-register-read 
+  // read the csrr into x and replace csrr with 0.
   return x;
 }
 
 static inline void 
 w_mstatus(uint64 x)
 {
-  asm volatile("csrw mstatus, %0" : : "r" (x));
+  asm volatile("csrw mstatus, %0" : : "r" (x)); // write into mstatus
 }
 
 // machine exception program counter, holds the
